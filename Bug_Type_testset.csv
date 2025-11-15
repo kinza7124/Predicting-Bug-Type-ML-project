@@ -1,0 +1,6 @@
+Bug ID,Type,Summary,Product,Component,Assignee,Status,Resolution,Updated
+1949669,defect,Memory leak in JavaScript engine when handling large arrays,Core,JavaScript Engine,jstutte,RESOLVED,FIXED,2025-02-22 10:15:30
+1949670,task,Implement dark mode for developer tools,DevTools,Inspector,hskupin,RESOLVED,FIXED,2025-02-22 14:20:45
+1949671,enhancement,Add keyboard shortcuts for tab group management,Firefox,Tabbed Browser,dao+bmo,RESOLVED,FIXED,2025-02-23 09:45:12
+1949672,defect,CSS grid layout incorrect in print preview,Core,Layout,dholbert,RESOLVED,FIXED,2025-02-23 11:30:22
+1949673,task,Update security certificates for release build,Core,Security: PSM,djackson,RESOLVED,FIXED,2025-02-24 08:15:33
