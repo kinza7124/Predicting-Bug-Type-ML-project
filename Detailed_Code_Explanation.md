@@ -1,5 +1,4 @@
 # Complete Code Explanation for Bug Classification Project
-## Beginner-Friendly Guide for Viva Preparation
 
 ---
 
@@ -929,36 +928,6 @@ X_pca = pca.fit_transform(X_resampled.toarray())
 
 ---
 
-## **COMMON VIVA QUESTIONS & ANSWERS**
-
-### **Q1: Why did you drop certain columns?**
-**A:** Bug ID is just an identifier. Status and Resolution are decided AFTER we know the bug type, so they create data leakage. Assignee doesn't affect bug type.
-
-### **Q2: What is SMOTE and why use it?**
-**A:** SMOTE creates synthetic examples of minority classes to balance the dataset. We had 6,712 defects but only 1,008 enhancements. Without balancing, the model would always predict "defect" and still get good accuracy, but wouldn't learn to distinguish types.
-
-### **Q3: Why use TF-IDF instead of simple word counting?**
-**A:** TF-IDF weights words by importance. Common words (like "the", "is") get low weights. Important words (like "crash", "error") get high weights. This helps the model focus on meaningful words.
-
-### **Q4: What is the difference between KNN and Random Forest?**
-**A:** KNN finds similar examples and predicts based on neighbors. Random Forest creates multiple decision trees and votes. Random Forest is better for complex patterns, KNN is simpler but slower for large datasets.
-
-### **Q5: Why did K-Means clustering accuracy?**
-**A:** K-Means is unsupervised - it doesn't know the correct labels. We can't compute accuracy. Instead, we compare clusters with actual bug types to see if they match.
-
-### **Q6: Why is Stacking better than individual models?**
-**A:** Stacking uses a meta-learner to learn which base model to trust for different cases. It combines strengths of multiple models and reduces individual weaknesses.
-
-### **Q7: What would you do differently next time?**
-**A:** 
-- Try more neural network architectures (deeper networks, different activations)
-- Use grid search for hyperparameter tuning
-- Try different text embeddings (Word2Vec, BERT)
-- Feature selection to reduce dimensions
-- More sophisticated feature engineering
-
----
-
 ## **GLOSSARY OF TERMS**
 
 - **Dataframe**: Table-like data structure (pandas)
@@ -978,4 +947,3 @@ X_pca = pca.fit_transform(X_resampled.toarray())
 - **Backpropagation**: Calculating gradients in neural networks
 
 ---
-
