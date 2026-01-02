@@ -5,9 +5,19 @@ const mobileMenu = document.getElementById('mobileMenu');
 // Set theme to dark mode permanently
 document.body.setAttribute('data-theme', 'dark');
 
-// Check if device is mobile
+// Check if mobile device
 function isMobileDevice() {
     return window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+// Check if tablet device
+function isTabletDevice() {
+    return window.innerWidth > 768 && window.innerWidth <= 1024;
+}
+
+// Check if laptop device
+function isLaptopDevice() {
+    return window.innerWidth > 1024 && window.innerWidth <= 1440;
 }
 
 // Mobile Menu Toggle
@@ -114,8 +124,10 @@ function initializeCharts() {
     
     // Check if mobile device
     const isMobile = isMobileDevice();
+    const isTablet = isTabletDevice();
+    const isLaptop = isLaptopDevice();
     const screenWidth = window.innerWidth;
-    const containerPadding = isMobile ? 40 : 100;
+    const containerPadding = isMobile ? 40 : isTablet ? 60 : 100;
     
     // Bug Type Distribution Chart - Fixed for mobile
     const bugTypeData = [{
@@ -143,7 +155,7 @@ function initializeCharts() {
         title: {
             text: '',  // Remove title from chart, will be handled by HTML
             font: { 
-                size: isMobile ? 16 : 18, 
+                size: isMobile ? 16 : isTablet ? 18 : 20, 
                 color: textPrimary,
                 family: 'Inter, sans-serif'
             }
@@ -153,25 +165,25 @@ function initializeCharts() {
         font: { 
             color: textPrimary, 
             family: 'Inter, sans-serif',
-            size: isMobile ? 10 : 12 
+            size: isMobile ? 10 : isTablet ? 11 : 12 
         },
         showlegend: !isMobile,
         legend: {
             orientation: 'h',
-            y: isMobile ? -0.3 : -0.1,
+            y: isMobile ? -0.3 : isTablet ? -0.2 : -0.1,
             x: 0.5,
             xanchor: 'center',
             font: { 
                 color: textPrimary, 
-                size: isMobile ? 10 : 12,
+                size: isMobile ? 10 : isTablet ? 11 : 12,
                 family: 'Inter, sans-serif'
             },
             bgcolor: 'rgba(0,0,0,0.3)',
             bordercolor: borderColor,
             borderwidth: 1
         },
-        margin: isMobile ? { t: 20, b: 40, l: 20, r: 20 } : { t: 30, b: 50, l: 50, r: 50 },
-        height: isMobile ? 300 : 400,
+        margin: isMobile ? { t: 20, b: 40, l: 20, r: 20 } : isTablet ? { t: 30, b: 50, l: 40, r: 40 } : { t: 30, b: 50, l: 50, r: 50 },
+        height: isMobile ? 300 : isTablet ? 350 : 400,
         width: isMobile ? Math.min(screenWidth - containerPadding, 320) : undefined,
         annotations: isMobile ? [
             {
@@ -235,8 +247,8 @@ function initializeCharts() {
             fixedrange: isMobile
         },
         hoverlabel: { font: { color: textPrimary, size: isMobile ? 10 : 12 } },
-        margin: isMobile ? { t: 30, b: 30, l: 40, r: 20 } : { t: 50, b: 50, l: 60, r: 50 },
-        height: isMobile ? 250 : 350,
+        margin: isMobile ? { t: 30, b: 30, l: 40, r: 20 } : isTablet ? { t: 40, b: 40, l: 50, r: 30 } : { t: 50, b: 50, l: 60, r: 50 },
+        height: isMobile ? 250 : isTablet ? 300 : 350,
         width: isMobile ? Math.min(screenWidth - containerPadding, 300) : undefined,
         autosize: true
     };
@@ -287,8 +299,8 @@ function initializeCharts() {
             showgrid: !isMobile,
             fixedrange: isMobile
         },
-        margin: isMobile ? { t: 30, b: 60, l: 40, r: 20 } : { t: 50, b: 100, l: 60, r: 50 },
-        height: isMobile ? 280 : 400,
+        margin: isMobile ? { t: 30, b: 60, l: 40, r: 20 } : isTablet ? { t: 40, b: 80, l: 50, r: 30 } : { t: 50, b: 100, l: 60, r: 50 },
+        height: isMobile ? 280 : isTablet ? 350 : 400,
         width: isMobile ? Math.min(screenWidth - containerPadding, 320) : undefined,
         autosize: true
     };
@@ -730,3 +742,45 @@ if (document.readyState === 'loading') {
 } else {
     initializeCharts();
 }
+// Debug function for laptop screens
+function debugLaptopLayout() {
+    const screenWidth = window.innerWidth;
+    const dataGrid = document.querySelector('.data-grid');
+    const dataCards = document.querySelectorAll('.data-card, .chart-card');
+    
+    console.log('Screen width:', screenWidth);
+    console.log('Data grid element:', dataGrid);
+    console.log('Data grid computed style:', window.getComputedStyle(dataGrid));
+    console.log('Number of data cards:', dataCards.length);
+    
+    dataCards.forEach((card, index) => {
+        console.log(`Card ${index}:`, card);
+        console.log(`Card ${index} computed style:`, window.getComputedStyle(card));
+    });
+    
+    // Force visibility if needed
+    if (screenWidth >= 769) {
+        if (dataGrid) {
+            dataGrid.style.display = 'grid';
+            dataGrid.style.gridTemplateColumns = '1fr 1fr';
+            dataGrid.style.gap = '2rem';
+            dataGrid.style.visibility = 'visible';
+            dataGrid.style.opacity = '1';
+        }
+        
+        dataCards.forEach(card => {
+            card.style.display = 'block';
+            card.style.visibility = 'visible';
+            card.style.opacity = '1';
+        });
+    }
+}
+
+// Run debug function on load and resize
+window.addEventListener('load', debugLaptopLayout);
+window.addEventListener('resize', debugLaptopLayout);
+
+// Force layout update after DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(debugLaptopLayout, 1000);
+});
