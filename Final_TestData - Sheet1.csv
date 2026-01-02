@@ -1,0 +1,183 @@
+Bug ID,Type,Summary,Product,Component,Assignee,Status,Resolution,Updated
+1949669,defect,Memory leak in JavaScript engine when handling large arrays,Core,JavaScript Engine,jstutte,RESOLVED,FIXED,2025-02-22 10:15:30
+1949670,task,Implement dark mode for developer tools,DevTools,Inspector,hskupin,RESOLVED,FIXED,2025-02-22 14:20:45
+1949671,enhancement,Add keyboard shortcuts for tab group management,Firefox,Tabbed Browser,dao+bmo,RESOLVED,FIXED,2025-02-23 9:45:12
+1949672,defect,CSS grid layout incorrect in print preview,Core,Layout,dholbert,RESOLVED,FIXED,2025-02-23 11:30:22
+1949673,task,Update security certificates for release build,Core,Security: PSM,djackson,RESOLVED,FIXED,2025-02-24 8:15:33
+1949674,defect,Video playback stuttering on Linux with Wayland,Core,Audio/Video: Playback,alwu,RESOLVED,FIXED,2025-02-24 13:40:18
+1949675,enhancement,Improve search performance in bookmark manager,Firefox,Bookmarks & History,jsudiaman,RESOLVED,FIXED,2025-02-25 10:25:47
+1949676,task,Add telemetry for new privacy features,Toolkit,Telemetry,chutten,RESOLVED,FIXED,2025-02-25 15:35:29
+1949677,defect,Extension API not working in private windows,WebExtensions,General,rob,RESOLVED,FIXED,2025-02-26 9:50:14
+1949678,enhancement,Support WebAssembly SIMD operations,Core,JavaScript: WebAssembly,jseward,RESOLVED,FIXED,2025-02-26 14:15:38
+1949679,task,Document new debugging APIs,Developer Infrastructure,Source Documentation,ahal,RESOLVED,FIXED,2025-02-27 11:20:45
+1949680,defect,Font rendering issues on high DPI displays,Core,Graphics: Text,jfkthame,RESOLVED,FIXED,2025-02-27 16:30:12
+1949681,enhancement,Add multi-language spell checking,Toolkit,Form Autofill,dlee,RESOLVED,FIXED,2025-02-28 10:45:33
+1949682,task,Update third-party libraries for security patches,Firefox Build System,General,glandium,RESOLVED,FIXED,2025-02-28 14:55:27
+1949683,defect,Password manager not saving credentials on some sites,Firefox,Password Manager,pdahiya,RESOLVED,FIXED,2025-03-01 9:10:44
+1949684,enhancement,Implement progressive web app installation,Firefox,DOM: Core & HTML,bzbarsky,RESOLVED,FIXED,2025-03-01 13:25:19
+1949685,task,Performance optimization for session restore,Firefox,Session Restore,sthompson,RESOLVED,FIXED,2025-03-02 10:35:28
+1949686,defect,Touch events not working on embedded maps,Core,DOM: UI Events & Focus,smaug,RESOLVED,FIXED,2025-03-02 15:40:33
+1949687,enhancement,Add support for CSS container queries,Core,CSS Parsing and Computation,emilio,RESOLVED,FIXED,2025-03-03 11:15:47
+1949688,task,Update localization strings for new features,Firefox,L10n,pike,RESOLVED,FIXED,2025-03-03 16:20:38
+1949689,defect,Memory corruption in image decoding,Core,ImageLib,jrmuizel,RESOLVED,FIXED,2025-03-04 9:30:25
+1949690,enhancement,Improve accessibility of form controls,Core,Disability Access,surkov,RESOLVED,FIXED,2025-03-04 14:45:16
+1949691,task,Add automated tests for new sidebar features,Firefox,Sidebar,sclements,RESOLVED,FIXED,2025-03-05 10:50:29
+1949692,defect,Network requests timing out on slow connections,Core,Networking,mayhemer,RESOLVED,FIXED,2025-03-05 15:55:42
+1949693,enhancement,Implement new download manager UI,Firefox,Downloads,mkaply,RESOLVED,FIXED,2025-03-06 11:05:33
+1949694,task,Update build system for Apple Silicon,Firefox Build System,MacOS Integration,mh+mozilla,RESOLVED,FIXED,2025-03-06 16:10:27
+1949695,defect,Crash when closing multiple tabs quickly,Firefox,Tabbed Browser,dao+bmo,RESOLVED,FIXED,2025-03-07 10:20:44
+1949696,enhancement,Add experimental support for WebGPU compute shaders,Core,Graphics: WebGPU,egubler,RESOLVED,FIXED,2025-03-07 14:25:39
+1949697,task,Improve error reporting for web developers,DevTools,Console,nchevobbe,RESOLVED,FIXED,2025-03-08 11:30:18
+1949698,defect,SVG animations not playing correctly,Core,SVG,longsonr,RESOLVED,FIXED,2025-03-08 15:35:22
+1949699,enhancement,Add tab preview on hover,Firefox,Tabbed Browser,dwalker,RESOLVED,FIXED,2025-03-09 12:40:35
+1949700,task,Update documentation for extension developers,WebExtensions,Documentation,mixedpuppy,RESOLVED,FIXED,2025-03-09 17:45:41
+1949701,defect,Audio distortion with certain codecs,Core,Audio/Video,padenot,RESOLVED,FIXED,2025-03-10 13:50:28
+1949702,enhancement,Implement reading mode improvements,Toolkit,Reader Mode,rhn0312,RESOLVED,FIXED,2025-03-10 18:55:33
+1949703,task,Add performance monitoring for new features,Toolkit,Performance,jya,RESOLVED,FIXED,2025-03-11 14:05:47
+1949704,defect,Security vulnerability in XML parser,Core,XML,peterv,RESOLVED,FIXED,2025-03-11 19:10:52
+1949705,enhancement,Support for new web authentication methods,Core,DOM: Web Authentication,jschanck,RESOLVED,FIXED,2025-03-12 15:15:38
+1949706,task,Update user interface for privacy settings,Firefox,Preferences,emcminn,RESOLVED,FIXED,2025-03-12 20:20:43
+1949707,defect,Database corruption in history storage,Toolkit,Places & History,mak77,RESOLVED,FIXED,2025-03-13 16:25:29
+1949708,enhancement,Add smart bookmark suggestions,Firefox,Address Bar,adw,RESOLVED,FIXED,2025-03-13 21:30:34
+1949709,task,Implement new crash reporting system,Toolkit,Crash Reporting,gsvelto,RESOLVED,FIXED,2025-03-14 17:35:40
+1949710,defect,Memory leak in graphics layer composition,Core,Graphics,jgilbert,RESOLVED,FIXED,2025-03-14 22:40:45
+1949711,enhancement,Improve search engine management,Firefox,Search,jteow,RESOLVED,FIXED,2025-03-15 18:45:31
+1949712,task,Add support for new web standards,Core,DOM,bzbarsky,RESOLVED,FIXED,2025-03-15 23:50:36
+1949713,defect,Performance regression in JavaScript JIT,Core,JavaScript Engine: JIT,iireland,RESOLVED,FIXED,2025-03-16 19:55:42
+1949714,enhancement,Implement new developer tools protocol,Remote Protocol,Agent,hskupin,RESOLVED,FIXED,2025-03-17 1:00:47
+1949715,task,Update automated testing framework,Testing,Mochitest,ahal,RESOLVED,FIXED,2025-03-17 20:05:33
+1949716,defect,CSS transitions not working with certain properties,Core,CSS Transitions and Animations,birtles,RESOLVED,FIXED,2025-03-18 1:10:38
+1949717,enhancement,Add experimental machine learning features,Core,Machine Learning,edilee,RESOLVED,FIXED,2025-03-18 21:15:44
+1949718,task,Improve localization infrastructure,Toolkit,L10n,pike,RESOLVED,FIXED,2025-03-19 2:20:49
+1949719,defect,Security issue in cross-origin resource sharing,Core,DOM: Security,maltejur,RESOLVED,FIXED,2025-03-19 22:25:35
+1949720,enhancement,Implement new privacy-preserving analytics,Data Platform and Tools,Glean: SDK,jrediger,RESOLVED,FIXED,2025-03-20 3:30:40
+1949721,task,Update build dependencies,Firefox Build System,Toolchains,glandium,RESOLVED,FIXED,2025-03-20 23:35:46
+1949722,defect,Font loading issues with web fonts,Core,Graphics: Text,jfkthame,RESOLVED,FIXED,2025-03-21 4:40:51
+1949723,enhancement,Add support for new video codecs,Core,Audio/Video: Playback,alwu,RESOLVED,FIXED,2025-03-22 0:45:37
+1949724,task,Improve error handling in network requests,Core,Networking,mayhemer,RESOLVED,FIXED,2025-03-22 5:50:42
+1949725,defect,UI freeze during large file downloads,Firefox,Downloads,mkaply,RESOLVED,FIXED,2025-03-23 1:55:48
+1949726,enhancement,Implement new tab organization features,Firefox,Tabbed Browser,dao+bmo,RESOLVED,FIXED,2025-03-23 7:00:53
+1949727,task,Update security protocols,Core,Security: PSM,djackson,RESOLVED,FIXED,2025-03-24 3:05:39
+1949728,defect,Memory corruption in PDF rendering,Firefox,PDF Viewer,cdenizet,RESOLVED,FIXED,2025-03-24 8:10:44
+1949729,enhancement,Add new developer tools for performance analysis,DevTools,Performance Tools,jdescottes,RESOLVED,FIXED,2025-03-25 4:15:50
+1949730,task,Improve automated test coverage,Testing,Mozbase,ahal,RESOLVED,FIXED,2025-03-25 9:20:55
+1949731,defect,CSS flexbox layout incorrect in RTL languages,Core,Layout,dholbert,RESOLVED,FIXED,2025-03-26 5:25:41
+1949732,enhancement,Implement new accessibility features,Core,Disability Access,surkov,RESOLVED,FIXED,2025-03-26 10:30:46
+1949733,task,Update documentation for web developers,Developer Infrastructure,Source Documentation,ahal,RESOLVED,FIXED,2025-03-27 6:35:52
+1949734,defect,Performance issue with large DOM trees,Core,DOM,bzbarsky,RESOLVED,FIXED,2025-03-27 11:40:57
+1949735,enhancement,Add new privacy controls,Firefox,Privacy,bvandersloot,RESOLVED,FIXED,2025-03-28 7:45:43
+1949736,task,Implement new build optimization,Firefox Build System,General,glandium,RESOLVED,FIXED,2025-03-28 12:50:48
+1949737,defect,Crash in graphics driver on specific hardware,Core,Graphics,jgilbert,RESOLVED,FIXED,2025-03-29 8:55:54
+1949738,enhancement,Improve web compatibility,Web Compatibility,Interventions,dschubert,RESOLVED,FIXED,2025-03-29 14:00:59
+1949739,task,Update third-party components,Firefox Build System,Third Party Packaging,jcristau,RESOLVED,FIXED,2025-03-30 10:05:45
+1949740,defect,Security vulnerability in image processing,Core,ImageLib,jrmuizel,RESOLVED,FIXED,2025-03-30 15:10:50
+1949741,enhancement,Add new experimental APIs,WebExtensions,General,rob,RESOLVED,FIXED,2025-03-31 11:15:56
+1949742,task,Improve performance monitoring,Toolkit,Performance,jya,RESOLVED,FIXED,2025-03-31 16:20:01
+1949743,defect,Memory leak in JavaScript garbage collection,Core,JavaScript: GC,jdemooij,RESOLVED,FIXED,2025-04-01 12:25:47
+1949744,enhancement,Implement new user interface themes,Firefox,Theme,emilio,RESOLVED,FIXED,2025-04-01 17:30:52
+1949745,task,Update security certificates,Core,Security: PSM,djackson,RESOLVED,FIXED,2025-04-02 13:35:58
+1949746,defect,Network protocol handling error,Core,Networking,mayhemer,RESOLVED,FIXED,2025-04-02 18:40:03
+1949747,enhancement,Add support for new web standards,Core,WebRTC,mfroman,RESOLVED,FIXED,2025-04-03 14:45:49
+1949748,task,Improve automated testing infrastructure,Testing,geckodriver,hskupin,RESOLVED,FIXED,2025-04-03 19:50:54
+1949749,defect,UI rendering issues on high refresh rate displays,Core,Widget,stransky,RESOLVED,FIXED,2025-04-04 15:55:00
+1949750,enhancement,Implement new data visualization features,DevTools,Netmonitor,jdescottes,RESOLVED,FIXED,2025-04-04 21:00:05
+1949751,task,Update localization system,Toolkit,L10n,pike,RESOLVED,FIXED,2025-04-05 17:05:11
+1949752,defect,Security issue in cookie handling,Core,Networking: Cookies,jduell,RESOLVED,FIXED,2025-04-05 22:10:16
+1949753,enhancement,Add new privacy-enhancing technologies,Core,Privacy: Anti-Tracking,bvandersloot,RESOLVED,FIXED,2025-04-06 18:15:02
+1949754,task,Improve build performance,Firefox Build System,Build Config,glandium,RESOLVED,FIXED,2025-04-06 23:20:07
+1949755,defect,Crash in multimedia processing,Core,Audio/Video,padenot,RESOLVED,FIXED,2025-04-07 19:25:13
+1949756,enhancement,Implement new developer tools,DevTools,Debugger,jlast,RESOLVED,FIXED,2025-04-07 0:30:18
+1949757,task,Update documentation system,Developer Infrastructure,Source Documentation,ahal,RESOLVED,FIXED,2025-04-08 20:35:04
+1949758,defect,Memory corruption in text rendering,Core,Graphics: Text,jfkthame,RESOLVED,FIXED,2025-04-08 1:40:09
+1949759,enhancement,Add new experimental features,Firefox,General,mconley,RESOLVED,FIXED,2025-04-09 21:45:15
+1949760,task,Improve security auditing,Core,Security,dveditz,RESOLVED,FIXED,2025-04-09 2:50:20
+1949761,defect,Performance regression in page loading,Core,DOM: Content Processes,billm,RESOLVED,FIXED,2025-04-10 22:55:26
+1949762,enhancement,Implement new user interface components,Firefox,Theme,emilio,RESOLVED,FIXED,2025-04-10 4:00:31
+1949763,task,Update build tools,Firefox Build System,Toolchains,glandium,RESOLVED,FIXED,2025-04-11 0:05:17
+1949764,defect,Security vulnerability in JavaScript engine,Core,JavaScript Engine,jandem,RESOLVED,FIXED,2025-04-11 5:10:22
+1949765,enhancement,Add new web platform features,Core,DOM,bzbarsky,RESOLVED,FIXED,2025-04-12 1:15:28
+1949766,task,Improve error reporting,Toolkit,Crash Reporting,gsvelto,RESOLVED,FIXED,2025-04-12 6:20:33
+1949767,defect,Memory leak in network stack,Core,Networking,mayhemer,RESOLVED,FIXED,2025-04-13 2:25:19
+1949768,enhancement,Implement new performance optimizations,Core,Performance,jya,RESOLVED,FIXED,2025-04-13 7:30:24
+1949769,task,Update testing framework,Testing,Mochitest,ahal,RESOLVED,FIXED,2025-04-14 3:35:30
+1949770,defect,UI inconsistency in dark mode,Firefox,Theme,emilio,RESOLVED,FIXED,2025-04-14 8:40:35
+1949771,enhancement,Add new developer tools features,DevTools,Inspector,nchevobbe,RESOLVED,FIXED,2025-04-15 4:45:21
+1949772,task,Improve build system documentation,Firefox Build System,Documentation,glandium,RESOLVED,FIXED,2025-04-15 9:50:26
+1949773,defect,Security issue in extension system,WebExtensions,General,rob,RESOLVED,FIXED,2025-04-16 5:55:32
+1949774,enhancement,Implement new privacy features,Core,Privacy: Anti-Tracking,bvandersloot,RESOLVED,FIXED,2025-04-16 11:00:37
+1949775,task,Update performance monitoring,Toolkit,Performance,jya,RESOLVED,FIXED,2025-04-17 7:05:23
+1949776,defect,Crash in graphics subsystem,Core,Graphics,jgilbert,RESOLVED,FIXED,2025-04-17 12:10:28
+1949777,enhancement,Add new web standards support,Core,WebRTC,mfroman,RESOLVED,FIXED,2025-04-18 8:15:34
+1949778,task,Improve automated testing,Testing,Marionette,hskupin,RESOLVED,FIXED,2025-04-18 13:20:39
+1949779,defect,Memory corruption in multimedia processing,Core,Audio/Video,padenot,RESOLVED,FIXED,2025-04-19 9:25:25
+1949780,enhancement,Implement new user interface improvements,Firefox,Theme,emilio,RESOLVED,FIXED,2025-04-19 14:30:30
+1949781,task,Update security protocols,Core,Security: PSM,djackson,RESOLVED,FIXED,2025-04-20 10:35:36
+1949782,defect,Performance issue with large datasets,Core,JavaScript Engine,jandem,RESOLVED,FIXED,2025-04-20 15:40:41
+1949783,enhancement,Add new experimental APIs,WebExtensions,General,rob,RESOLVED,FIXED,2025-04-21 11:45:27
+1949784,task,Improve build performance,Firefox Build System,Build Config,glandium,RESOLVED,FIXED,2025-04-21 16:50:32
+1949785,defect,Security vulnerability in network stack,Core,Networking,mayhemer,RESOLVED,FIXED,2025-04-22 12:55:38
+1949786,enhancement,Implement new developer tools,DevTools,Debugger,jlast,RESOLVED,FIXED,2025-04-22 18:00:43
+1949787,task,Update documentation,Developer Infrastructure,Source Documentation,ahal,RESOLVED,FIXED,2025-04-23 14:05:29
+1949788,defect,Memory leak in DOM processing,Core,DOM,bzbarsky,RESOLVED,FIXED,2025-04-23 19:10:34
+1949789,enhancement,Add new privacy features,Core,Privacy: Anti-Tracking,bvandersloot,RESOLVED,FIXED,2025-04-24 15:15:40
+1949790,task,Improve performance monitoring,Toolkit,Performance,jya,RESOLVED,FIXED,2025-04-24 20:20:45
+1949791,defect,Crash in JavaScript engine,Core,JavaScript Engine,jandem,RESOLVED,FIXED,2025-04-25 16:25:31
+1949792,enhancement,Implement new web standards,Core,WebRTC,mfroman,RESOLVED,FIXED,2025-04-25 21:30:36
+1949793,task,Update build system,Firefox Build System,Toolchains,glandium,RESOLVED,FIXED,2025-04-26 17:35:42
+1949794,defect,Security issue in graphics subsystem,Core,Graphics,jgilbert,RESOLVED,FIXED,2025-04-26 22:40:47
+1949795,enhancement,Add new experimental features,Firefox,General,mconley,RESOLVED,FIXED,2025-04-27 18:45:33
+1949796,task,Improve automated testing,Testing,Mochitest,ahal,RESOLVED,FIXED,2025-04-27 23:50:38
+1949797,defect,Performance regression in network stack,Core,Networking,mayhemer,RESOLVED,FIXED,2025-04-28 19:55:44
+1949798,enhancement,Implement new user interface components,Firefox,Theme,emilio,RESOLVED,FIXED,2025-04-28 1:00:49
+1949799,task,Update security certificates,Core,Security: PSM,djackson,RESOLVED,FIXED,2025-04-29 21:05:35
+1949800,defect,Memory corruption in multimedia processing,Core,Audio/Video,padenot,RESOLVED,FIXED,2025-04-29 2:10:40
+1949801,enhancement,Add new developer tools features,DevTools,Inspector,nchevobbe,RESOLVED,FIXED,2025-04-30 22:15:46
+1949802,task,Improve build documentation,Firefox Build System,Documentation,glandium,RESOLVED,FIXED,2025-04-30 3:20:51
+1949803,defect,Security vulnerability in extension system,WebExtensions,General,rob,RESOLVED,FIXED,2025-05-01 23:25:37
+1949804,enhancement,Implement new privacy features,Core,Privacy: Anti-Tracking,bvandersloot,RESOLVED,FIXED,2025-05-01 4:30:42
+1949805,task,Update performance monitoring,Toolkit,Performance,jya,RESOLVED,FIXED,2025-05-02 0:35:48
+1949806,defect,Crash in graphics driver,Core,Graphics,jgilbert,RESOLVED,FIXED,2025-05-02 5:40:53
+1949807,enhancement,Add new web standards support,Core,WebRTC,mfroman,RESOLVED,FIXED,2025-05-03 1:45:39
+1949808,task,Improve automated testing,Testing,Marionette,hskupin,RESOLVED,FIXED,2025-05-03 6:50:44
+1949809,defect,Memory leak in DOM processing,Core,DOM,bzbarsky,RESOLVED,FIXED,2025-05-04 2:55:50
+1949810,enhancement,Implement new user interface improvements,Firefox,Theme,emilio,RESOLVED,FIXED,2025-05-04 8:00:55
+1949811,task,Update security protocols,Core,Security: PSM,djackson,RESOLVED,FIXED,2025-05-05 4:05:41
+1949812,defect,Performance issue with large datasets,Core,JavaScript Engine,jandem,RESOLVED,FIXED,2025-05-05 9:10:46
+1949813,enhancement,Add new experimental APIs,WebExtensions,General,rob,RESOLVED,FIXED,2025-05-06 5:15:52
+1949814,task,Improve build performance,Firefox Build System,Build Config,glandium,RESOLVED,FIXED,2025-05-06 10:20:57
+1949815,defect,Security vulnerability in network stack,Core,Networking,mayhemer,RESOLVED,FIXED,2025-05-07 6:25:43
+1949816,enhancement,Implement new developer tools,DevTools,Debugger,jlast,RESOLVED,FIXED,2025-05-07 11:30:48
+1949817,task,Update documentation,Developer Infrastructure,Source Documentation,ahal,RESOLVED,FIXED,2025-05-08 7:35:54
+1949818,defect,Memory leak in JavaScript engine,Core,JavaScript Engine,jandem,RESOLVED,FIXED,2025-05-08 12:40:59
+1949819,enhancement,Add new privacy features,Core,Privacy: Anti-Tracking,bvandersloot,RESOLVED,FIXED,2025-05-09 8:45:45
+1949820,task,Improve performance monitoring,Toolkit,Performance,jya,RESOLVED,FIXED,2025-05-09 13:50:50
+1949821,defect,Crash in multimedia processing,Core,Audio/Video,padenot,RESOLVED,FIXED,2025-05-10 9:55:56
+1949822,enhancement,Implement new web standards,Core,WebRTC,mfroman,RESOLVED,FIXED,2025-05-10 15:00:01
+1949823,task,Update build system,Firefox Build System,Toolchains,glandium,RESOLVED,FIXED,2025-05-11 11:05:47
+1949824,defect,Security issue in graphics subsystem,Core,Graphics,jgilbert,RESOLVED,FIXED,2025-05-11 16:10:52
+1949825,enhancement,Add new experimental features,Firefox,General,mconley,RESOLVED,FIXED,2025-05-12 12:15:58
+1949826,task,Improve automated testing,Testing,Mochitest,ahal,RESOLVED,FIXED,2025-05-12 17:20:03
+1949827,defect,Performance regression in network stack,Core,Networking,mayhemer,RESOLVED,FIXED,2025-05-13 13:25:49
+1949828,enhancement,Implement new user interface components,Firefox,Theme,emilio,RESOLVED,FIXED,2025-05-13 18:30:54
+1949829,task,Update security certificates,Core,Security: PSM,djackson,RESOLVED,FIXED,2025-05-14 14:35:00
+1949830,defect,Memory corruption in multimedia processing,Core,Audio/Video,padenot,RESOLVED,FIXED,2025-05-14 19:40:05
+1949831,enhancement,Add new developer tools features,DevTools,Inspector,nchevobbe,RESOLVED,FIXED,2025-05-15 15:45:11
+1949832,task,Improve build documentation,Firefox Build System,Documentation,glandium,RESOLVED,FIXED,2025-05-15 20:50:16
+1949833,defect,Security vulnerability in extension system,WebExtensions,General,rob,RESOLVED,FIXED,2025-05-16 16:55:02
+1949834,enhancement,Implement new privacy features,Core,Privacy: Anti-Tracking,bvandersloot,RESOLVED,FIXED,2025-05-16 22:00:07
+1949835,task,Update performance monitoring,Toolkit,Performance,jya,RESOLVED,FIXED,2025-05-17 18:05:13
+1949836,defect,Crash in graphics driver,Core,Graphics,jgilbert,RESOLVED,FIXED,2025-05-17 23:10:18
+1949837,enhancement,Add new web standards support,Core,WebRTC,mfroman,RESOLVED,FIXED,2025-05-18 19:15:04
+1949838,task,Improve automated testing,Testing,Marionette,hskupin,RESOLVED,FIXED,2025-05-18 0:20:09
+1949839,defect,Memory leak in DOM processing,Core,DOM,bzbarsky,RESOLVED,FIXED,2025-05-19 20:25:15
+1949840,enhancement,Implement new user interface improvements,Firefox,Theme,emilio,RESOLVED,FIXED,2025-05-19 1:30:20
+1949841,task,Update security protocols,Core,Security: PSM,djackson,RESOLVED,FIXED,2025-05-20 21:35:06
+1949842,defect,Performance issue with large datasets,Core,JavaScript Engine,jandem,RESOLVED,FIXED,2025-05-20 2:40:11
+1949843,enhancement,Add new experimental APIs,WebExtensions,General,rob,RESOLVED,FIXED,2025-05-21 22:45:17
+1949844,task,Improve build performance,Firefox Build System,Build Config,glandium,RESOLVED,FIXED,2025-05-21 3:50:22
+1949845,defect,Security vulnerability in network stack,Core,Networking,mayhemer,RESOLVED,FIXED,2025-05-22 23:55:08
+1949846,enhancement,Implement new developer tools,DevTools,Debugger,jlast,RESOLVED,FIXED,2025-05-22 5:00:13
+1949847,task,Update documentation,Developer Infrastructure,Source Documentation,ahal,RESOLVED,FIXED,2025-05-23 1:05:19
+1949848,defect,Memory leak in JavaScript engine,Core,JavaScript Engine,jandem,RESOLVED,FIXED,2025-05-23 6:10:24
+1949849,enhancement,Add new privacy features,Core,Privacy: Anti-Tracking,bvandersloot,RESOLVED,FIXED,2025-05-24 2:15:10
+1949850,task,Improve performance monitoring,Toolkit,Performance,jya,RESOLVED,FIXED,2025-05-24 7:20:15
