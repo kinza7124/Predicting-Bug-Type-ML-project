@@ -547,9 +547,12 @@ body {
 
 .hero-stats {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--spacing-4);
     margin-top: var(--spacing-8);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .stat-card {
@@ -564,15 +567,14 @@ body {
     transition: var(--transition-base);
     position: relative;
     overflow: hidden;
-    opacity: 0;
-    transform: translateY(50px);
-    animation: slideInUp 0.8s ease forwards;
+    min-height: 100px;
+    width: 100%;
+    /* Remove animations */
+    opacity: 1;
+    transform: none;
 }
 
-.stat-card:nth-child(1) { animation-delay: 1.2s; }
-.stat-card:nth-child(2) { animation-delay: 1.4s; }
-.stat-card:nth-child(3) { animation-delay: 1.6s; }
-.stat-card:nth-child(4) { animation-delay: 1.8s; }
+/* Remove stat card animation delays */
 
 .stat-card::before {
     content: '';
@@ -634,7 +636,7 @@ body {
     border-radius: var(--radius-2xl);
     padding: var(--spacing-4);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-    animation: float 6s ease-in-out infinite;
+    /* Remove floating animation */
     width: 100%;
     max-width: 400px;
     position: relative;
@@ -777,14 +779,25 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: var(--spacing-8);
     margin-bottom: var(--spacing-8);
+    width: 100%;
+    max-width: 100%;
 }
 
-/* Mobile responsive data grid */
-@media (max-width: 992px) {
+/* Product Analysis Enhancement */
+.data-grid .chart-card:last-child {
+    grid-column: 1 / -1;
+}
+
+/* Mobile and tablet responsive data grid */
+@media (max-width: 768px) {
     .data-grid {
         grid-template-columns: 1fr;
         gap: var(--spacing-6);
         margin-bottom: var(--spacing-6);
+    }
+    
+    .data-grid .chart-card:last-child {
+        grid-column: 1;
     }
 }
 
@@ -3123,4 +3136,268 @@ html {
         max-width: 100vw;
         overflow-x: hidden;
     }
+}
+/* Laptop Screen Optimizations (1024px - 1440px) */
+@media (min-width: 1024px) and (max-width: 1440px) {
+    .container {
+        max-width: 1200px;
+        padding: 0 var(--spacing-6);
+    }
+    
+    /* Ensure data grid stays 2-column on laptops */
+    .data-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-8);
+        align-items: start;
+    }
+    
+    /* Optimize chart sizing for laptop screens */
+    .chart-card,
+    .data-card {
+        padding: var(--spacing-8);
+        min-height: 400px;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .chart-card h3,
+    .data-card h3 {
+        margin-bottom: var(--spacing-6);
+        flex-shrink: 0;
+    }
+    
+    /* Ensure charts fill their containers properly */
+    .js-plotly-plot {
+        flex: 1;
+        min-height: 300px;
+        width: 100%;
+    }
+    
+    /* Sample data table optimization for laptops */
+    .sample-data-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .sample-data-table {
+        flex: 1;
+        min-height: 250px;
+    }
+    
+    /* Product analysis full width on laptops */
+    .data-grid .chart-card:last-child {
+        grid-column: 1 / -1;
+        min-height: 450px;
+    }
+}
+
+/* Large Laptop/Desktop Screens (1441px+) */
+@media (min-width: 1441px) {
+    .container {
+        max-width: 1400px;
+        padding: 0 var(--spacing-8);
+    }
+    
+    .data-grid {
+        gap: var(--spacing-10);
+    }
+    
+    .chart-card,
+    .data-card {
+        padding: var(--spacing-10);
+        min-height: 450px;
+    }
+    
+    .js-plotly-plot {
+        min-height: 350px;
+    }
+    
+    .data-grid .chart-card:last-child {
+        min-height: 500px;
+    }
+}
+
+/* Medium Laptop Screens (769px - 1023px) */
+@media (min-width: 769px) and (max-width: 1023px) {
+    .container {
+        max-width: 100%;
+        padding: 0 var(--spacing-5);
+    }
+    
+    .data-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-6);
+    }
+    
+    .chart-card,
+    .data-card {
+        padding: var(--spacing-6);
+        min-height: 350px;
+    }
+    
+    .js-plotly-plot {
+        min-height: 250px;
+    }
+    
+    /* Adjust font sizes for medium laptops */
+    .chart-card h3,
+    .data-card h3 {
+        font-size: var(--font-size-lg);
+    }
+}
+
+/* Fix for specific laptop resolutions */
+@media (min-width: 1366px) and (max-width: 1366px) {
+    /* Common laptop resolution 1366x768 */
+    .data-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-7);
+    }
+    
+    .chart-card,
+    .data-card {
+        padding: var(--spacing-7);
+    }
+}
+
+@media (min-width: 1920px) {
+    /* Full HD and above */
+    .container {
+        max-width: 1600px;
+    }
+    
+    .data-grid {
+        gap: var(--spacing-12);
+    }
+    
+    .chart-card,
+    .data-card {
+        padding: var(--spacing-12);
+        min-height: 500px;
+    }
+}
+
+/* Ensure proper aspect ratios on all laptop screens */
+@media (min-width: 769px) {
+    .floating-card {
+        max-width: 600px;
+        min-height: 450px;
+    }
+    
+    .hero-stats {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .stat-card {
+        min-height: 120px;
+    }
+}
+/* Force data-grid visibility on laptop screens */
+@media (min-width: 769px) {
+    .data-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: var(--spacing-8) !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    .data-card,
+    .chart-card {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* Ensure product analysis spans full width */
+    .data-grid .chart-card:last-child {
+        grid-column: 1 / -1 !important;
+    }
+}
+
+/* Debug styles for laptop screens */
+@media (min-width: 1024px) {
+    .data-grid {
+        border: 2px solid rgba(99, 102, 241, 0.3) !important;
+        min-height: 400px !important;
+    }
+    
+    .data-card,
+    .chart-card {
+        border: 1px solid rgba(139, 92, 246, 0.5) !important;
+        min-height: 300px !important;
+    }
+}
+/* Laptop Screen Hero Stats Fix */
+@media (min-width: 1024px) {
+    .hero-stats {
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: var(--spacing-4) !important;
+        max-width: 1200px !important;
+        margin: var(--spacing-8) auto 0 auto !important;
+    }
+    
+    .stat-card {
+        min-height: 100px !important;
+        padding: var(--spacing-4) !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: var(--spacing-3) !important;
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+    }
+    
+    .stat-number {
+        font-size: var(--font-size-2xl) !important;
+        font-weight: 700 !important;
+        color: var(--text-primary) !important;
+        line-height: 1 !important;
+        white-space: nowrap !important;
+    }
+    
+    .stat-label {
+        font-size: var(--font-size-sm) !important;
+        color: var(--text-secondary) !important;
+        font-weight: 500 !important;
+        margin-top: var(--spacing-1) !important;
+        white-space: nowrap !important;
+    }
+    
+    .stat-icon {
+        width: 50px !important;
+        height: 50px !important;
+        flex-shrink: 0 !important;
+    }
+    
+    .stat-content {
+        flex: 1 !important;
+        min-width: 0 !important;
+    }
+}
+
+/* Remove all animations from floating card */
+.floating-card {
+    animation: none !important;
+}
+
+@keyframes float {
+    /* Disable float animation */
+}
+
+/* Ensure stat cards are visible on all screen sizes */
+.stat-card {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+}
+
+.stat-card:nth-child(1),
+.stat-card:nth-child(2),
+.stat-card:nth-child(3),
+.stat-card:nth-child(4) {
+    animation-delay: 0s !important;
+    opacity: 1 !important;
+    transform: none !important;
 }
