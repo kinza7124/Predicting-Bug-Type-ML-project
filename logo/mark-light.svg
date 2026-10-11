@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Bug Classification Study">
+  <title>Bug Classification Study</title>
+  <circle cx="20" cy="20" r="19.2" stroke="#a59d8d" stroke-width="0.8"/>
+  <circle cx="20" cy="20" r="17.4" stroke="#a59d8d" stroke-width="0.4"/>
+  <g stroke="#c4a26b" stroke-width="1">
+    <path d="M19 9.6C18.6 8 17.4 7 15.8 7"/>
+    <path d="M21 9.6C21.4 8 22.6 7 24.2 7"/>
+    <path d="M17.9 11.2C17.9 10 18.8 9.3 20 9.3C21.2 9.3 22.1 10 22.1 11.2"/>
+    <path d="M15.6 14C15.6 12.2 17.4 11.2 20 11.2C22.6 11.2 24.4 12.2 24.4 14C24.4 15 23.6 15.6 22.6 15.6L17.4 15.6C16.4 15.6 15.6 15 15.6 14Z"/>
+    <path d="M20 16.6C24.6 16.6 25.8 19.8 25.8 22.6C25.8 27.2 22.6 30.6 20 32.6C17.4 30.6 14.2 27.2 14.2 22.6C14.2 19.8 15.4 16.6 20 16.6Z"/>
+    <path d="M20 16.6V32.6"/>
+    <path d="M17.6 19C16.6 21.4 16.6 25.2 18 28.4" stroke-width="0.5"/>
+    <path d="M22.4 19C23.4 21.4 23.4 25.2 22 28.4" stroke-width="0.5"/>
+    <path d="M15.8 14.6L13 13.4L12.2 11.6"/>
+    <path d="M24.2 14.6L27 13.4L27.8 11.6"/>
+    <path d="M14.4 20.8L11.6 21.4L10.8 23.4"/>
+    <path d="M25.6 20.8L28.4 21.4L29.2 23.4"/>
+    <path d="M15 26.6L12.8 28.2L12.8 30.2"/>
+    <path d="M25 26.6L27.2 28.2L27.2 30.2"/>
+  </g>
+</svg>

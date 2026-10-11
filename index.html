@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bug Type Classification</title>
     <meta name="description" content="A machine learning study classifying 10,000 Mozilla bug reports into defects, tasks and enhancements.">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%231c1a16'/><text x='32' y='44' text-anchor='middle' font-family='Georgia,serif' font-size='34' fill='%23c4a26b'>B</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="logo/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
@@ -18,8 +18,8 @@
 
     <header class="masthead" id="masthead">
         <div class="masthead-inner">
-            <a href="#overview" class="wordmark">
-                <span class="wordmark-mark">B</span>
+            <a href="#overview" class="wordmark" aria-label="Bug Classification Study — back to top">
+                <img class="mark" src="logo/mark.svg" alt="" width="42" height="42">
                 <span class="wordmark-text">Bug Classification <em>Study</em></span>
             </a>
             <nav class="nav" aria-label="Sections">
@@ -411,9 +411,12 @@
 
     <footer class="colophon">
         <div class="wrap colophon-inner">
-            <div>
+            <div class="colophon-brand">
+                <img class="mark" src="logo/mark-light.svg" alt="" width="64" height="64">
+                <div>
                 <p class="colophon-title">Bug Classification <em>Study</em></p>
                 <p class="colophon-sub">Machine learning for the automatic triage of software bug reports.</p>
+                </div>
             </div>
             <dl class="colophon-facts">
                 <div><dt>Accuracy</dt><dd>94.34%</dd></div>

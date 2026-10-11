@@ -11,6 +11,7 @@
     const navToggle = document.getElementById('navToggle');
     const drawer = document.getElementById('drawer');
     const navLinks = document.querySelectorAll('.nav-link');
+    const drawerLinks = document.querySelectorAll('.drawer-link');
 
     function setDrawer(open) {
         drawer.classList.toggle('is-open', open);
@@ -39,6 +40,7 @@
             if (!entry.isIntersecting) return;
             const id = entry.target.id;
             navLinks.forEach(link => link.classList.toggle('is-active', link.getAttribute('href') === '#' + id));
+            drawerLinks.forEach(link => link.classList.toggle('is-active', link.getAttribute('href') === '#' + id));
         });
     }, { rootMargin: '-45% 0px -50% 0px' });
 
@@ -102,6 +104,7 @@
         const small = isSmall();
         return Object.assign({
             paper_bgcolor: 'rgba(0,0,0,0)',
+            dragmode: false,
             plot_bgcolor: 'rgba(0,0,0,0)',
             font: { family: SANS, color: C.inkSoft, size: small ? 11 : 12 },
             margin: { t: 16, r: 8, b: 44, l: 52 },
@@ -156,6 +159,7 @@
             hovertemplate: '<b>%{label}</b><br>%{value:,} reports · %{percent}<extra></extra>'
         }], {
             paper_bgcolor: 'rgba(0,0,0,0)',
+            dragmode: false,
             font: { family: SANS, color: C.inkSoft, size: 12 },
             margin: { t: 8, r: 8, b: 8, l: 8 },
             height: small ? 300 : 360,
@@ -195,7 +199,7 @@
             fill: 'tozeroy',
             fillcolor: 'rgba(154, 120, 64, 0.10)',
             text: ['3,200', '4,500', '2,300'],
-            textposition: 'top center',
+            textposition: ['top right', 'top center', 'top left'],
             textfont: { family: SERIF, size: 17, color: C.ink },
             cliponaxis: false,
             hovertemplate: '%{x}: %{y:,} reports<extra></extra>'
@@ -283,6 +287,7 @@
             hovertemplate: '%{y}: %{x:.2f}%<extra></extra>'
         }], {
             paper_bgcolor: 'rgba(0,0,0,0)',
+            dragmode: false,
             plot_bgcolor: 'rgba(0,0,0,0)',
             font: { family: SANS, color: C.ivoryMuted, size: small ? 11 : 13 },
             margin: { t: 8, r: small ? 56 : 72, b: 40, l: small ? 128 : 170 },
@@ -327,6 +332,7 @@
             hovertemplate: 'Actual %{y} → predicted %{x}<br>%{z:,} reports<extra></extra>'
         }], {
             paper_bgcolor: 'rgba(0,0,0,0)',
+            dragmode: false,
             plot_bgcolor: 'rgba(0,0,0,0)',
             font: { family: SANS, color: C.inkSoft, size: small ? 11 : 12 },
             margin: { t: 8, r: 8, b: 56, l: small ? 96 : 110 },

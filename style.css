@@ -106,15 +106,14 @@ em {
     position: fixed;
     inset: 0 0 auto 0;
     z-index: 100;
-    background: rgba(245, 241, 232, 0.92);
-    backdrop-filter: saturate(1.2) blur(10px);
-    -webkit-backdrop-filter: saturate(1.2) blur(10px);
+    background: var(--paper);
     border-bottom: 1px solid transparent;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .masthead.is-scrolled {
     border-bottom-color: var(--rule);
+    box-shadow: 0 6px 18px -12px rgba(28, 26, 22, 0.35);
 }
 
 .masthead-inner {
@@ -134,16 +133,19 @@ em {
     gap: 14px;
 }
 
-.wordmark-mark {
-    display: grid;
-    place-items: center;
-    width: 34px;
-    height: 34px;
-    border: 1px solid var(--ink);
-    font-family: var(--serif);
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 1;
+.mark {
+    display: block;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+}
+
+.mark {
+    transition: transform 0.6s cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+
+.wordmark:hover .mark {
+    transform: rotate(-10deg);
 }
 
 .wordmark-text {
@@ -199,28 +201,30 @@ em {
 
 .nav-toggle {
     display: none;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
+    margin-right: -10px;
     background: none;
     border: 0;
     cursor: pointer;
     position: relative;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .nav-toggle span {
     position: absolute;
-    left: 9px;
-    right: 9px;
+    left: 11px;
+    right: 11px;
     height: 1px;
     background: var(--ink);
     transition: transform 0.3s ease, top 0.3s ease;
 }
 
-.nav-toggle span:nth-child(1) { top: 16px; }
-.nav-toggle span:nth-child(2) { top: 23px; }
+.nav-toggle span:nth-child(1) { top: 18px; }
+.nav-toggle span:nth-child(2) { top: 25px; }
 
-.nav-toggle[aria-expanded="true"] span:nth-child(1) { top: 20px; transform: rotate(45deg); }
-.nav-toggle[aria-expanded="true"] span:nth-child(2) { top: 20px; transform: rotate(-45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { top: 21.5px; transform: rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { top: 21.5px; transform: rotate(-45deg); }
 
 .drawer {
     display: none;
@@ -859,6 +863,17 @@ em {
     gap: 48px;
 }
 
+.colophon-brand {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.colophon-brand .mark {
+    width: 64px;
+    height: 64px;
+}
+
 .colophon-title {
     font-family: var(--serif);
     font-size: 30px;
@@ -992,8 +1007,11 @@ em {
         right: 0;
         bottom: 0;
         background: var(--paper);
-        padding: 24px var(--gutter);
+        padding: 16px var(--gutter) calc(32px + env(safe-area-inset-bottom));
         border-top: 1px solid var(--rule);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        z-index: 99;
         opacity: 0;
         visibility: hidden;
         transform: translateY(-8px);
@@ -1016,6 +1034,10 @@ em {
         font-family: var(--serif);
         font-size: 30px;
         line-height: 1.2;
+    }
+
+    .drawer-link.is-active {
+        color: var(--brass);
     }
 
     .drawer-link span {
@@ -1111,10 +1133,9 @@ em {
         font-size: 18px;
     }
 
-    .wordmark-mark {
-        width: 30px;
-        height: 30px;
-        font-size: 18px;
+    .mark {
+        width: 36px;
+        height: 36px;
     }
 
     .lede,
@@ -1182,6 +1203,44 @@ em {
 
     .hide-sm {
         display: none;
+    }
+
+    .table {
+        font-size: 14px;
+    }
+
+    .table th {
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        padding-right: 10px;
+    }
+
+    .table td {
+        padding: 14px 10px 14px 0;
+    }
+
+    .table .summary {
+        min-width: 0;
+    }
+
+    .table-metrics th:first-child,
+    .table-metrics td:first-child {
+        width: 34%;
+    }
+
+    .table-metrics .is-best td:first-child {
+        font-size: 17px;
+        line-height: 1.25;
+    }
+
+    .table-metrics .is-best td:first-child::after {
+        display: block;
+        margin: 4px 0 0;
+    }
+
+    .figure figcaption,
+    .hero-figure figcaption {
+        font-size: 12.5px;
     }
 
     .colophon-facts {
