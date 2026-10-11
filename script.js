@@ -1,786 +1,373 @@
-// Mobile Menu Toggle
-const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-const mobileMenu = document.getElementById('mobileMenu');
+// Bug Classification Study — interactions and charts
 
-// Set theme to dark mode permanently
-document.body.setAttribute('data-theme', 'dark');
+(function () {
+    'use strict';
 
-// Check if mobile device
-function isMobileDevice() {
-    return window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
+    // ----------------------------------------------------------------------
+    // Navigation
+    // ----------------------------------------------------------------------
 
-// Check if tablet device
-function isTabletDevice() {
-    return window.innerWidth > 768 && window.innerWidth <= 1024;
-}
+    const masthead = document.getElementById('masthead');
+    const navToggle = document.getElementById('navToggle');
+    const drawer = document.getElementById('drawer');
+    const navLinks = document.querySelectorAll('.nav-link');
 
-// Check if laptop device
-function isLaptopDevice() {
-    return window.innerWidth > 1024 && window.innerWidth <= 1440;
-}
-
-// Mobile Menu Toggle
-function toggleMobileMenu() {
-    mobileMenuToggle.classList.toggle('active');
-    mobileMenu.classList.toggle('active');
-    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-}
-
-mobileMenuToggle.addEventListener('click', toggleMobileMenu);
-
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.mobile-nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-        mobileMenuToggle.classList.remove('active');
-        mobileMenu.classList.remove('active');
-        document.body.style.overflow = '';
-    });
-});
-
-// Close mobile menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (!mobileMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
-        mobileMenuToggle.classList.remove('active');
-        mobileMenu.classList.remove('active');
-        document.body.style.overflow = '';
+    function setDrawer(open) {
+        drawer.classList.toggle('is-open', open);
+        navToggle.setAttribute('aria-expanded', String(open));
+        navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        document.body.classList.toggle('drawer-open', open);
     }
-});
 
-// Smooth Scrolling for Navigation Links
-document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        
-        // Remove active class from all links
-        document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(l => l.classList.remove('active'));
-        
-        // Add active class to clicked link
-        link.classList.add('active');
-        
-        // Get target section
-        const targetId = link.getAttribute('href').substring(1);
-        const targetSection = document.getElementById(targetId);
-        
-        if (targetSection) {
-            // Close mobile menu if open
-            mobileMenuToggle.classList.remove('active');
-            mobileMenu.classList.remove('active');
-            document.body.style.overflow = '';
-            
-            // Smooth scroll to target
-            targetSection.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
+    navToggle.addEventListener('click', () => setDrawer(!drawer.classList.contains('is-open')));
+    drawer.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setDrawer(false)));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') setDrawer(false); });
+    window.addEventListener('resize', () => { if (window.innerWidth > 860) setDrawer(false); });
 
-// Update active navigation link on scroll
-let scrollTimeout;
-window.addEventListener('scroll', () => {
-    // Throttle scroll events
-    if (scrollTimeout) return;
-    
-    scrollTimeout = setTimeout(() => {
-        const sections = document.querySelectorAll('.section, .hero');
-        const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
-        
-        let current = '';
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            
-            if (window.pageYOffset >= sectionTop - 200) {
-                current = section.getAttribute('id');
+    // Hairline under the masthead once the page scrolls
+    const onScroll = () => masthead.classList.toggle('is-scrolled', window.scrollY > 8);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Highlight the section currently in view
+    const tracked = ['overview', 'data', 'preprocessing', 'models', 'performance', 'insights']
+        .map(id => document.getElementById(id))
+        .filter(Boolean);
+
+    const sectionObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const id = entry.target.id;
+            navLinks.forEach(link => link.classList.toggle('is-active', link.getAttribute('href') === '#' + id));
+        });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+
+    tracked.forEach(section => sectionObserver.observe(section));
+
+    // ----------------------------------------------------------------------
+    // Reveal on scroll
+    // ----------------------------------------------------------------------
+
+    const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                revealObserver.unobserve(entry.target);
             }
         });
-        
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
-                link.classList.add('active');
-            }
-        });
-        
-        scrollTimeout = null;
-    }, 100);
-});
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-// Initialize Charts with mobile optimization
-function initializeCharts() {
-    // Get colors from CSS variables for consistency
-    const rootStyles = getComputedStyle(document.documentElement);
-    const primaryColor = rootStyles.getPropertyValue('--primary').trim();
-    const secondaryColor = rootStyles.getPropertyValue('--secondary').trim();
-    const accentColor = rootStyles.getPropertyValue('--accent').trim();
-    const successColor = rootStyles.getPropertyValue('--success').trim();
-    const warningColor = rootStyles.getPropertyValue('--warning').trim();
-    const errorColor = rootStyles.getPropertyValue('--error').trim();
-    const textPrimary = rootStyles.getPropertyValue('--text-primary').trim();
-    const borderColor = 'rgba(255,255,255,0.1)';
-    
-    // Check if mobile device
-    const isMobile = isMobileDevice();
-    const isTablet = isTabletDevice();
-    const isLaptop = isLaptopDevice();
-    const screenWidth = window.innerWidth;
-    const containerPadding = isMobile ? 40 : isTablet ? 60 : 100;
-    
-    // Bug Type Distribution Chart - Fixed for mobile
-    const bugTypeData = [{
-        values: [6712, 2280, 1008],
-        labels: ['Defect', 'Task', 'Enhancement'],
-        type: 'pie',
-        marker: {
-            colors: [primaryColor, secondaryColor, accentColor]
-        },
-        textinfo: isMobile ? 'percent' : 'label+percent',
-        textposition: isMobile ? 'inside' : 'outside',
-        hoverinfo: 'label+percent+value',
-        hovertemplate: '<b>%{label}</b><br>Count: %{value}<br>Percentage: %{percent}<extra></extra>',
-        hole: isMobile ? 0.2 : 0.3,
-        rotation: 45,
-        pull: isMobile ? 0.02 : 0.01,
-        textfont: {
-            size: isMobile ? 10 : 12,
-            color: textPrimary
-        },
-        insidetextorientation: 'horizontal'
-    }];
-    
-    const bugTypeLayout = {
-        title: {
-            text: '',  // Remove title from chart, will be handled by HTML
-            font: { 
-                size: isMobile ? 16 : isTablet ? 18 : 20, 
-                color: textPrimary,
-                family: 'Inter, sans-serif'
-            }
-        },
-        paper_bgcolor: 'transparent',
-        plot_bgcolor: 'transparent',
-        font: { 
-            color: textPrimary, 
-            family: 'Inter, sans-serif',
-            size: isMobile ? 10 : isTablet ? 11 : 12 
-        },
-        showlegend: !isMobile,
-        legend: {
-            orientation: 'h',
-            y: isMobile ? -0.3 : isTablet ? -0.2 : -0.1,
-            x: 0.5,
-            xanchor: 'center',
-            font: { 
-                color: textPrimary, 
-                size: isMobile ? 10 : isTablet ? 11 : 12,
-                family: 'Inter, sans-serif'
-            },
-            bgcolor: 'rgba(0,0,0,0.3)',
-            bordercolor: borderColor,
-            borderwidth: 1
-        },
-        margin: isMobile ? { t: 20, b: 40, l: 20, r: 20 } : isTablet ? { t: 30, b: 50, l: 40, r: 40 } : { t: 30, b: 50, l: 50, r: 50 },
-        height: isMobile ? 300 : isTablet ? 350 : 400,
-        width: isMobile ? Math.min(screenWidth - containerPadding, 320) : undefined,
-        annotations: isMobile ? [
-            {
-                font: {
-                    size: 10,
-                    color: textPrimary
-                },
-                showarrow: false,
-                text: 'Touch slices for details',
-                x: 0.5,
-                y: -0.15,
-                xref: 'paper',
-                yref: 'paper'
-            }
-        ] : []
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ----------------------------------------------------------------------
+    // Charts
+    // ----------------------------------------------------------------------
+
+    if (typeof Plotly === 'undefined') return;
+
+    const css = getComputedStyle(document.documentElement);
+    const token = name => css.getPropertyValue(name).trim();
+
+    const C = {
+        ink: token('--ink'),
+        inkSoft: token('--ink-soft'),
+        inkMuted: token('--ink-muted'),
+        rule: token('--rule-soft'),
+        brass: token('--brass'),
+        brassLight: token('--brass-light'),
+        oxblood: token('--oxblood'),
+        sage: token('--sage'),
+        paper: token('--paper'),
+        paperDeep: token('--paper-deep'),
+        stone: '#b5aa96',
+        ivory: token('--ivory'),
+        ivoryMuted: token('--ivory-muted'),
+        nightRule: token('--night-rule')
     };
-    
-    Plotly.newPlot('bugTypeChart', bugTypeData, bugTypeLayout, {
+
+    const SANS = 'Jost, Helvetica Neue, Arial, sans-serif';
+    const SERIF = 'Cormorant Garamond, Georgia, serif';
+
+    const isSmall = () => window.innerWidth <= 560;
+
+    const config = {
         responsive: true,
-        displayModeBar: !isMobile,
+        displayModeBar: false,
         displaylogo: false,
-        modeBarButtonsToRemove: ['toImage', 'sendDataToCloud', 'select2d', 'lasso2d', 'toggleSpikelines'],
-        scrollZoom: !isMobile
-    });
-    
-    // Temporal Distribution Chart
-    const temporalData = [{
-        x: ['2023', '2024', '2025'],
-        y: [3200, 4500, 2300],
-        type: 'scatter',
-        mode: 'lines+markers',
-        line: { color: primaryColor, width: isMobile ? 2 : 3 },
-        marker: { color: secondaryColor, size: isMobile ? 6 : 8 },
-        name: 'Bug Reports',
-        fill: 'tozeroy',
-        fillcolor: 'rgba(99, 102, 241, 0.1)'
-    }];
-    
-    const temporalLayout = {
-        title: {
-            text: isMobile ? 'Bug Reports Over Time' : 'Bug Reports Over Time',
-            font: { size: isMobile ? 12 : 16, color: textPrimary, family: 'Inter, sans-serif' },
-            x: 0.5,
-            xanchor: 'center'
-        },
-        paper_bgcolor: 'transparent',
-        plot_bgcolor: 'transparent',
-        font: { color: textPrimary, size: isMobile ? 9 : 12, family: 'Inter, sans-serif' },
-        xaxis: { 
-            title: { text: isMobile ? '' : 'Year', font: { color: textPrimary, size: isMobile ? 9 : 12 } },
-            gridcolor: borderColor,
-            tickfont: { color: textPrimary, size: isMobile ? 9 : 12 },
-            showgrid: !isMobile,
-            fixedrange: isMobile
-        },
-        yaxis: { 
-            title: { text: isMobile ? 'Bugs' : 'Number of Bugs', font: { color: textPrimary, size: isMobile ? 9 : 12 } },
-            gridcolor: borderColor,
-            tickfont: { color: textPrimary, size: isMobile ? 9 : 12 },
-            showgrid: !isMobile,
-            fixedrange: isMobile
-        },
-        hoverlabel: { font: { color: textPrimary, size: isMobile ? 10 : 12 } },
-        margin: isMobile ? { t: 30, b: 30, l: 40, r: 20 } : isTablet ? { t: 40, b: 40, l: 50, r: 30 } : { t: 50, b: 50, l: 60, r: 50 },
-        height: isMobile ? 250 : isTablet ? 300 : 350,
-        width: isMobile ? Math.min(screenWidth - containerPadding, 300) : undefined,
-        autosize: true
-    };
-    
-    Plotly.newPlot('temporalChart', temporalData, temporalLayout, {
-        responsive: true,
-        displayModeBar: false,
         scrollZoom: false,
-        doubleClick: false,
-        showTips: false,
-        staticPlot: isMobile
-    });
-    
-    // Product Analysis Chart
-    const productData = [{
-        x: ['Firefox', 'Core', 'Toolkit', 'DevTools', 'WebExtensions'],
-        y: [3500, 2800, 1500, 1200, 1000],
-        type: 'bar',
-        marker: {
-            color: [primaryColor, secondaryColor, accentColor, successColor, warningColor]
-        },
-        text: isMobile ? [] : ['3500', '2800', '1500', '1200', '1000'],
-        textposition: 'auto'
-    }];
-    
-    const productLayout = {
-        title: {
-            text: isMobile ? 'Top Products' : 'Top Products by Bug Count',
-            font: { size: isMobile ? 12 : 16, color: textPrimary, family: 'Inter, sans-serif' },
-            x: 0.5,
-            xanchor: 'center'
-        },
-        paper_bgcolor: 'transparent',
-        plot_bgcolor: 'transparent',
-        font: { color: textPrimary, size: isMobile ? 9 : 12, family: 'Inter, sans-serif' },
-        xaxis: { 
-            title: { text: isMobile ? '' : 'Product', font: { color: textPrimary, size: isMobile ? 9 : 12 } },
-            gridcolor: borderColor,
-            tickfont: { color: textPrimary, size: isMobile ? 9 : 12 },
-            tickangle: isMobile ? -45 : 0,
-            showgrid: !isMobile,
-            fixedrange: isMobile
-        },
-        yaxis: { 
-            title: { text: isMobile ? 'Bugs' : 'Number of Bugs', font: { color: textPrimary, size: isMobile ? 9 : 12 } },
-            gridcolor: borderColor,
-            tickfont: { color: textPrimary, size: isMobile ? 9 : 12 },
-            showgrid: !isMobile,
-            fixedrange: isMobile
-        },
-        margin: isMobile ? { t: 30, b: 60, l: 40, r: 20 } : isTablet ? { t: 40, b: 80, l: 50, r: 30 } : { t: 50, b: 100, l: 60, r: 50 },
-        height: isMobile ? 280 : isTablet ? 350 : 400,
-        width: isMobile ? Math.min(screenWidth - containerPadding, 320) : undefined,
-        autosize: true
+        doubleClick: false
     };
-    
-    Plotly.newPlot('productChart', productData, productLayout, {
-        responsive: true,
-        displayModeBar: false,
-        scrollZoom: false,
-        doubleClick: false,
-        staticPlot: isMobile
-    });
-    
-    // Before SMOTE Chart
-    const beforeSmoteData = [{
-        x: ['Defect', 'Task', 'Enhancement'],
-        y: [6712, 2280, 1008],
-        type: 'bar',
-        marker: { color: errorColor },
-        text: isMobile ? [] : ['6712', '2280', '1008'],
-        textposition: 'auto'
-    }];
-    
-    const beforeSmoteLayout = {
-        title: {
-            text: 'Before SMOTE (Imbalanced)',
-            font: { size: isMobile ? 14 : 16, color: textPrimary }
-        },
-        paper_bgcolor: 'transparent',
-        plot_bgcolor: 'transparent',
-        font: { color: textPrimary, size: isMobile ? 10 : 12 },
-        xaxis: { 
-            gridcolor: borderColor,
-            tickfont: { color: textPrimary, size: isMobile ? 10 : 12 }
-        },
-        yaxis: { 
-            title: { text: 'Number of Samples', font: { color: textPrimary, size: isMobile ? 10 : 12 } },
-            gridcolor: borderColor,
-            tickfont: { color: textPrimary, size: isMobile ? 10 : 12 }
-        },
-        margin: isMobile ? { t: 40, b: 50, l: 60, r: 40 } : { t: 50, b: 50, l: 60, r: 50 }
-    };
-    
-    Plotly.newPlot('beforeSmoteChart', beforeSmoteData, beforeSmoteLayout, {
-        responsive: true,
-        displayModeBar: !isMobile
-    });
-    
-    // After SMOTE Chart
-    const afterSmoteData = [{
-        x: ['Defect', 'Task', 'Enhancement'],
-        y: [6712, 6712, 6712],
-        type: 'bar',
-        marker: { color: successColor },
-        text: isMobile ? [] : ['6712', '6712', '6712'],
-        textposition: 'auto'
-    }];
-    
-    const afterSmoteLayout = {
-        title: {
-            text: 'After SMOTE (Balanced)',
-            font: { size: isMobile ? 14 : 16, color: textPrimary }
-        },
-        paper_bgcolor: 'transparent',
-        plot_bgcolor: 'transparent',
-        font: { color: textPrimary, size: isMobile ? 10 : 12 },
-        xaxis: { 
-            gridcolor: borderColor,
-            tickfont: { color: textPrimary, size: isMobile ? 10 : 12 }
-        },
-        yaxis: { 
-            title: { text: 'Number of Samples', font: { color: textPrimary, size: isMobile ? 10 : 12 } },
-            gridcolor: borderColor,
-            tickfont: { color: textPrimary, size: isMobile ? 10 : 12 }
-        },
-        margin: isMobile ? { t: 40, b: 50, l: 60, r: 40 } : { t: 50, b: 50, l: 60, r: 50 }
-    };
-    
-    Plotly.newPlot('afterSmoteChart', afterSmoteData, afterSmoteLayout, {
-        responsive: true,
-        displayModeBar: !isMobile
-    });
-    
-    // Models Comparison Chart
-    const modelsData = [{
-        y: ['Perceptron', 'Gaussian NB', 'Gradient Boosting', 'MLP Neural Network', 'Logistic Regression', 'SVM', 'KNN', 'Decision Tree', 'Random Forest', 'Stacking Classifier'],
-        x: [33.33, 62.51, 78.40, 75.62, 80.98, 81.53, 82.70, 83.81, 91.73, 94.34],
-        type: 'bar',
-        orientation: 'h',
-        marker: {
-            color: [33.33, 62.51, 78.40, 75.62, 80.98, 81.53, 82.70, 83.81, 91.73, 94.34],
-            colorscale: 'Viridis',
-            showscale: false
-        },
-        text: isMobile ? [] : ['33.33%', '62.51%', '78.40%', '75.62%', '80.98%', '81.53%', '82.70%', '83.81%', '91.73%', '94.34%'],
-        textposition: 'auto'
-    }];
-    
-    const modelsLayout = {
-        title: {
-            text: 'Model Accuracy Comparison',
-            font: { size: isMobile ? 14 : 18, color: textPrimary }
-        },
-        paper_bgcolor: 'transparent',
-        plot_bgcolor: 'transparent',
-        font: { color: textPrimary, size: isMobile ? 10 : 12 },
-        xaxis: { 
-            title: { text: 'Accuracy (%)', font: { color: textPrimary, size: isMobile ? 10 : 12 } },
-            gridcolor: borderColor,
-            tickfont: { color: textPrimary, size: isMobile ? 10 : 12 },
-            range: [0, 100]
-        },
-        yaxis: { 
-            title: { text: 'Model', font: { color: textPrimary, size: isMobile ? 10 : 12 } },
-            gridcolor: borderColor,
-            tickfont: { color: textPrimary, size: isMobile ? 8 : 12 },
-            automargin: true
-        },
-        margin: isMobile ? { t: 40, b: 50, l: 180, r: 40 } : { t: 50, b: 50, l: 180, r: 50 },
-        height: isMobile ? 500 : 600
-    };
-    
-    Plotly.newPlot('modelsChart', modelsData, modelsLayout, {
-        responsive: true,
-        displayModeBar: !isMobile
-    });
-    
-    // Confusion Matrix
-    const confusionData = [{
-        z: [[1320, 45, 25], [35, 1340, 35], [20, 30, 1350]],
-        x: ['Defect', 'Task', 'Enhancement'],
-        y: ['Defect', 'Task', 'Enhancement'],
-        type: 'heatmap',
-        colorscale: [
-            [0, 'rgba(99, 102, 241, 0.1)'],
-            [0.5, 'rgba(99, 102, 241, 0.5)'],
-            [1, 'rgba(99, 102, 241, 1)']
-        ],
-        showscale: !isMobile,
-        hoverongaps: false,
-        text: isMobile ? [] : [['1320', '45', '25'], ['35', '1340', '35'], ['20', '30', '1350']],
-        texttemplate: isMobile ? '' : '%{text}',
-        textfont: { color: textPrimary, size: isMobile ? 8 : 12 }
-    }];
-    
-    const confusionLayout = {
-        title: {
-            text: 'Confusion Matrix - Stacking Classifier',
-            font: { size: isMobile ? 14 : 16, color: textPrimary }
-        },
-        paper_bgcolor: 'transparent',
-        plot_bgcolor: 'transparent',
-        font: { color: textPrimary, size: isMobile ? 10 : 12 },
-        xaxis: { 
-            title: { text: 'Predicted', font: { color: textPrimary, size: isMobile ? 10 : 12 } },
-            tickfont: { color: textPrimary, size: isMobile ? 10 : 12 }
-        },
-        yaxis: { 
-            title: { text: 'Actual', font: { color: textPrimary, size: isMobile ? 10 : 12 } },
-            tickfont: { color: textPrimary, size: isMobile ? 10 : 12 }
-        },
-        margin: isMobile ? { t: 40, b: 50, l: 60, r: 40 } : { t: 50, b: 50, l: 60, r: 50 },
-        height: isMobile ? 300 : 400
-    };
-    
-    Plotly.newPlot('confusionMatrix', confusionData, confusionLayout, {
-        responsive: true,
-        displayModeBar: !isMobile
-    });
-    
-    // Add touch events for bug type chart on mobile
-    if (isMobile) {
-        const bugTypeChart = document.getElementById('bugTypeChart');
-        bugTypeChart.addEventListener('click', function(eventData) {
-            // Highlight the clicked segment
-            if (eventData.points && eventData.points[0]) {
-                const point = eventData.points[0];
-                // Create a simple alert or tooltip with bug type info
-                const bugInfo = document.createElement('div');
-                bugInfo.className = 'mobile-bug-info';
-                bugInfo.innerHTML = `
-                    <div class="bug-info-content">
-                        <h4>${point.label}</h4>
-                        <p>Count: ${point.value.toLocaleString()}</p>
-                        <p>Percentage: ${(point.percent * 100).toFixed(1)}%</p>
-                    </div>
-                `;
-                bugInfo.style.cssText = `
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    background: rgba(15, 15, 35, 0.95);
-                    backdrop-filter: blur(20px);
-                    border: 1px solid ${borderColor};
-                    border-radius: 10px;
-                    padding: 20px;
-                    z-index: 10000;
-                    max-width: 80%;
-                    text-align: center;
-                    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-                `;
-                
-                document.body.appendChild(bugInfo);
-                
-                // Remove after 2 seconds
-                setTimeout(() => {
-                    if (bugInfo.parentNode) {
-                        bugInfo.parentNode.removeChild(bugInfo);
-                    }
-                }, 2000);
+
+    function baseLayout(overrides) {
+        const small = isSmall();
+        return Object.assign({
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { family: SANS, color: C.inkSoft, size: small ? 11 : 12 },
+            margin: { t: 16, r: 8, b: 44, l: 52 },
+            height: small ? 280 : 320,
+            showlegend: false,
+            bargap: 0.45,
+            hoverlabel: {
+                bgcolor: C.ink,
+                bordercolor: C.ink,
+                font: { family: SANS, color: C.paper, size: 12 }
+            },
+            xaxis: {
+                showgrid: false,
+                zeroline: false,
+                linecolor: C.ink,
+                linewidth: 1,
+                ticks: '',
+                tickfont: { color: C.inkSoft },
+                fixedrange: true
+            },
+            yaxis: {
+                gridcolor: C.rule,
+                gridwidth: 1,
+                zeroline: false,
+                showline: false,
+                ticks: '',
+                tickfont: { color: C.inkMuted },
+                separatethousands: true,
+                tickformat: ',d',
+                fixedrange: true
             }
+        }, overrides);
+    }
+
+    function renderCharts() {
+        const small = isSmall();
+
+        // Fig. 1 — type distribution
+        Plotly.react('bugTypeChart', [{
+            type: 'pie',
+            values: [6712, 2280, 1008],
+            labels: ['Defect', 'Task', 'Enhancement'],
+            hole: 0.72,
+            sort: false,
+            direction: 'clockwise',
+            rotation: 0,
+            marker: {
+                colors: [C.ink, C.brass, C.stone],
+                line: { color: C.paper, width: 3 }
+            },
+            textinfo: 'none',
+            hovertemplate: '<b>%{label}</b><br>%{value:,} reports · %{percent}<extra></extra>'
+        }], {
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            font: { family: SANS, color: C.inkSoft, size: 12 },
+            margin: { t: 8, r: 8, b: 8, l: 8 },
+            height: small ? 300 : 360,
+            showlegend: true,
+            legend: {
+                orientation: 'h',
+                x: 0.5,
+                xanchor: 'center',
+                y: -0.04,
+                yanchor: 'top',
+                font: { family: SANS, size: 12, color: C.inkSoft },
+                itemclick: false,
+                itemdoubleclick: false
+            },
+            hoverlabel: { bgcolor: C.ink, bordercolor: C.ink, font: { family: SANS, color: C.paper } },
+            annotations: [{
+                text: '67%',
+                showarrow: false,
+                font: { family: SERIF, size: small ? 38 : 48, color: C.ink },
+                x: 0.5, y: 0.56, xref: 'paper', yref: 'paper', yanchor: 'middle'
+            }, {
+                text: 'DEFECTS',
+                showarrow: false,
+                font: { family: SANS, size: 11, color: C.inkMuted },
+                x: 0.5, y: 0.40, xref: 'paper', yref: 'paper', yanchor: 'middle'
+            }]
+        }, config);
+
+        // Fig. 2 — reports per year
+        Plotly.react('temporalChart', [{
+            type: 'scatter',
+            mode: 'lines+markers+text',
+            x: ['2023', '2024', '2025'],
+            y: [3200, 4500, 2300],
+            line: { color: C.ink, width: 1.5, shape: 'linear' },
+            marker: { color: C.paper, size: 9, line: { color: C.ink, width: 1.5 } },
+            fill: 'tozeroy',
+            fillcolor: 'rgba(154, 120, 64, 0.10)',
+            text: ['3,200', '4,500', '2,300'],
+            textposition: 'top center',
+            textfont: { family: SERIF, size: 17, color: C.ink },
+            cliponaxis: false,
+            hovertemplate: '%{x}: %{y:,} reports<extra></extra>'
+        }], baseLayout({
+            margin: { t: 24, r: 32, b: 44, l: 52 },
+            xaxis: Object.assign(baseLayout().xaxis, { type: 'category' }),
+            yaxis: Object.assign(baseLayout().yaxis, { range: [0, 5400] })
+        }), config);
+
+        // Fig. 3 — product counts
+        const products = ['Firefox', 'Core', 'Toolkit', 'DevTools', 'WebExtensions'];
+        const productCounts = [3500, 2800, 1500, 1200, 1000];
+        Plotly.react('productChart', [{
+            type: 'bar',
+            x: products,
+            y: productCounts,
+            marker: { color: products.map((_, i) => i === 0 ? C.brass : C.ink) },
+            text: productCounts.map(v => v.toLocaleString()),
+            textposition: 'outside',
+            textfont: { family: SERIF, size: 16, color: C.ink },
+            cliponaxis: false,
+            hovertemplate: '%{x}: %{y:,} reports<extra></extra>'
+        }], baseLayout({
+            margin: { t: 24, r: 8, b: small ? 64 : 44, l: 52 },
+            xaxis: Object.assign(baseLayout().xaxis, { tickangle: small ? -35 : 0 }),
+            yaxis: Object.assign(baseLayout().yaxis, { range: [0, 4100] })
+        }), config);
+
+        // Fig. 4 / 5 — SMOTE before and after
+        const classes = ['Defect', 'Task', 'Enhancement'];
+        const smoteLayout = baseLayout({
+            margin: { t: 24, r: 8, b: 44, l: 52 },
+            yaxis: Object.assign(baseLayout().yaxis, { range: [0, 7800] })
         });
-    }
-}
 
-// Add CSS for mobile bug info
-const style = document.createElement('style');
-style.textContent = `
-    .mobile-bug-info .bug-info-content h4 {
-        color: var(--text-primary);
-        margin-bottom: 10px;
-        font-size: 18px;
-    }
-    
-    .mobile-bug-info .bug-info-content p {
-        color: var(--text-secondary);
-        margin: 5px 0;
-        font-size: 14px;
-    }
-    
-    @media (max-width: 768px) {
-        .floating-card {
-            height: 400px !important;
-            overflow: hidden;
-        }
-        
-        #bugTypeChart {
-            min-height: 350px;
-            touch-action: manipulation;
-        }
-        
-        .js-plotly-plot .plotly .modebar {
-            display: none !important;
-        }
-    }
-`;
-document.head.appendChild(style);
+        Plotly.react('beforeSmoteChart', [{
+            type: 'bar',
+            x: classes,
+            y: [6712, 2280, 1008],
+            marker: { color: [C.ink, C.stone, C.stone] },
+            text: ['6,712', '2,280', '1,008'],
+            textposition: 'outside',
+            textfont: { family: SERIF, size: 16, color: C.ink },
+            cliponaxis: false,
+            hovertemplate: '%{x}: %{y:,} samples<extra></extra>'
+        }], smoteLayout, config);
 
-// Update charts on window resize
-let resizeTimeout;
-window.addEventListener('resize', function() {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(function() {
-        // Clear existing plots
-        Plotly.purge('bugTypeChart');
-        Plotly.purge('temporalChart');
-        Plotly.purge('productChart');
-        Plotly.purge('beforeSmoteChart');
-        Plotly.purge('afterSmoteChart');
-        Plotly.purge('modelsChart');
-        Plotly.purge('confusionMatrix');
-        
-        // Reinitialize charts with new dimensions
-        initializeCharts();
-    }, 250);
-});
+        Plotly.react('afterSmoteChart', [{
+            type: 'bar',
+            x: classes,
+            y: [6712, 6712, 6712],
+            marker: { color: [C.ink, C.brass, C.brass] },
+            text: ['6,712', '6,712', '6,712'],
+            textposition: 'outside',
+            textfont: { family: SERIF, size: 16, color: C.ink },
+            cliponaxis: false,
+            hovertemplate: '%{x}: %{y:,} samples<extra></extra>'
+        }], smoteLayout, config);
 
-// Intersection Observer for Animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
+        // Fig. 6 — model comparison (dark section), sorted ascending so the best sits on top
+        const models = [
+            ['Perceptron', 33.33],
+            ['Gaussian NB', 62.51],
+            ['MLP Neural Network', 75.62],
+            ['Gradient Boosting', 78.40],
+            ['Logistic Regression', 80.98],
+            ['SVM', 81.53],
+            ['KNN', 82.70],
+            ['Decision Tree', 83.81],
+            ['Random Forest', 91.73],
+            ['Stacking Classifier', 94.34]
+        ];
+        const best = models.length - 1;
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
+        Plotly.react('modelsChart', [{
+            type: 'bar',
+            orientation: 'h',
+            y: models.map(m => m[0]),
+            x: models.map(m => m[1]),
+            marker: { color: models.map((_, i) => i === best ? C.brassLight : 'rgba(239, 233, 220, 0.82)') },
+            text: models.map(m => m[1].toFixed(2) + '%'),
+            textposition: 'outside',
+            textfont: { family: SERIF, size: small ? 14 : 17, color: C.ivory },
+            cliponaxis: false,
+            hovertemplate: '%{y}: %{x:.2f}%<extra></extra>'
+        }], {
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { family: SANS, color: C.ivoryMuted, size: small ? 11 : 13 },
+            margin: { t: 8, r: small ? 56 : 72, b: 40, l: small ? 128 : 170 },
+            height: small ? 440 : 520,
+            bargap: 0.5,
+            showlegend: false,
+            hoverlabel: { bgcolor: C.ivory, bordercolor: C.ivory, font: { family: SANS, color: C.ink } },
+            xaxis: {
+                range: [0, 100],
+                ticksuffix: '%',
+                gridcolor: C.nightRule,
+                zeroline: false,
+                showline: false,
+                ticks: '',
+                tickfont: { color: C.ivoryMuted },
+                fixedrange: true
+            },
+            yaxis: {
+                showgrid: false,
+                ticks: '',
+                ticklabelstandoff: 12,
+                tickfont: { color: C.ivory },
+                fixedrange: true
+            }
+        }, config);
+
+        // Fig. 7 — confusion matrix
+        const z = [[1320, 45, 25], [35, 1340, 35], [20, 30, 1350]];
+        Plotly.react('confusionMatrix', [{
+            type: 'heatmap',
+            z: z,
+            x: classes,
+            y: classes,
+            colorscale: [
+                [0, C.paperDeep],
+                [0.08, '#d9c9a6'],
+                [1, C.ink]
+            ],
+            showscale: false,
+            xgap: 3,
+            ygap: 3,
+            hovertemplate: 'Actual %{y} → predicted %{x}<br>%{z:,} reports<extra></extra>'
+        }], {
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { family: SANS, color: C.inkSoft, size: small ? 11 : 12 },
+            margin: { t: 8, r: 8, b: 56, l: small ? 96 : 110 },
+            height: small ? 320 : 380,
+            hoverlabel: { bgcolor: C.ink, bordercolor: C.ink, font: { family: SANS, color: C.paper } },
+            xaxis: {
+                title: { text: 'PREDICTED', font: { size: 11, color: C.inkMuted }, standoff: 14 },
+                side: 'bottom',
+                ticks: '',
+                showgrid: false,
+                fixedrange: true
+            },
+            yaxis: {
+                title: { text: 'ACTUAL', font: { size: 11, color: C.inkMuted }, standoff: 14 },
+                autorange: 'reversed',
+                ticks: '',
+                showgrid: false,
+                fixedrange: true
+            },
+            annotations: z.flatMap((row, r) => row.map((v, c) => ({
+                x: classes[c],
+                y: classes[r],
+                text: v.toLocaleString(),
+                showarrow: false,
+                font: { family: SERIF, size: small ? 17 : 22, color: r === c ? C.paper : C.ink }
+            })))
+        }, config);
+    }
+
+    renderCharts();
+
+    // Re-render only when crossing the small-screen breakpoint; Plotly handles width itself
+    let wasSmall = isSmall();
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            if (isSmall() !== wasSmall) {
+                wasSmall = isSmall();
+                renderCharts();
+            }
+        }, 200);
     });
-}, observerOptions);
-
-// Observe all cards and sections for animation
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialize charts first
-    initializeCharts();
-    
-    // Then setup animations
-    const animatedElements = document.querySelectorAll('.stat-card, .overview-card, .data-card, .chart-card, .pipeline-step, .model-card, .insight-card, .performance-card, .comparison-card, .dataset-card');
-    
-    animatedElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
-    
-    // Animate section titles
-    const sectionTitles = document.querySelectorAll('.section-title');
-    sectionTitles.forEach(title => {
-        title.style.opacity = '0';
-        title.style.transform = 'translateY(30px)';
-        title.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(title);
-    });
-});
-
-// Add loading animation
-window.addEventListener('load', () => {
-    document.body.classList.add('loaded');
-    
-    // Add a slight delay to ensure all elements are loaded
-    setTimeout(() => {
-        const preloader = document.createElement('div');
-        preloader.style.position = 'fixed';
-        preloader.style.top = '0';
-        preloader.style.left = '0';
-        preloader.style.width = '100%';
-        preloader.style.height = '100%';
-        preloader.style.background = 'var(--bg-primary)';
-        preloader.style.zIndex = '9999';
-        preloader.style.opacity = '1';
-        preloader.style.transition = 'opacity 0.5s ease';
-        preloader.style.pointerEvents = 'none';
-        preloader.id = 'preloader';
-        document.body.appendChild(preloader);
-        
-        // Fade out preloader
-        setTimeout(() => {
-            preloader.style.opacity = '0';
-            setTimeout(() => {
-                if (preloader.parentNode) {
-                    preloader.parentNode.removeChild(preloader);
-                }
-            }, 500);
-        }, 100);
-    }, 100);
-});
-
-// Navbar background on scroll
-let scrollTimeoutNavbar;
-window.addEventListener('scroll', () => {
-    if (scrollTimeoutNavbar) return;
-    
-    scrollTimeoutNavbar = setTimeout(() => {
-        const navbar = document.querySelector('.navbar');
-        if (window.scrollY > 50) {
-            navbar.style.background = 'rgba(15, 15, 35, 0.98)';
-            navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3)';
-            navbar.style.backdropFilter = 'blur(20px)';
-        } else {
-            navbar.style.background = 'rgba(15, 15, 35, 0.95)';
-            navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
-            navbar.style.backdropFilter = 'blur(20px)';
-        }
-        
-        scrollTimeoutNavbar = null;
-    }, 100);
-});
-
-// Add scroll progress indicator
-let scrollProgressTimeout;
-window.addEventListener('scroll', () => {
-    if (scrollProgressTimeout) return;
-    
-    scrollProgressTimeout = setTimeout(() => {
-        let scrollProgress = document.getElementById('scroll-progress');
-        if (!scrollProgress) {
-            scrollProgress = document.createElement('div');
-            scrollProgress.id = 'scroll-progress';
-            document.body.appendChild(scrollProgress);
-        }
-        
-        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = (winScroll / height) * 100;
-        scrollProgress.style.width = scrolled + '%';
-        
-        scrollProgressTimeout = null;
-    }, 50);
-});
-
-// Add click effect for mobile menu links
-const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-mobileNavLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        mobileNavLinks.forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
-    });
-});
-
-// Handle orientation change
-let orientationTimeout;
-window.addEventListener('orientationchange', () => {
-    clearTimeout(orientationTimeout);
-    orientationTimeout = setTimeout(() => {
-        // Close mobile menu on orientation change
-        mobileMenuToggle.classList.remove('active');
-        mobileMenu.classList.remove('active');
-        document.body.style.overflow = '';
-        
-        // Clear and reinitialize charts
-        Plotly.purge('bugTypeChart');
-        Plotly.purge('temporalChart');
-        Plotly.purge('productChart');
-        Plotly.purge('beforeSmoteChart');
-        Plotly.purge('afterSmoteChart');
-        Plotly.purge('modelsChart');
-        Plotly.purge('confusionMatrix');
-        
-        // Reinitialize charts
-        setTimeout(() => {
-            initializeCharts();
-        }, 300);
-    }, 300);
-});
-
-// Prevent zoom on double-tap (iOS)
-let lastTouchEnd = 0;
-document.addEventListener('touchend', (event) => {
-    const now = (new Date()).getTime();
-    if (now - lastTouchEnd <= 300) {
-        event.preventDefault();
-    }
-    lastTouchEnd = now;
-}, false);
-
-// Handle touch events for charts
-document.addEventListener('touchstart', function(e) {
-    // Allow touch scrolling on charts
-    if (e.target.closest('.js-plotly-plot')) {
-        e.stopPropagation();
-    }
-}, { passive: true });
-
-// Initialize everything when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeCharts);
-} else {
-    initializeCharts();
-}
-// Debug function for laptop screens
-function debugLaptopLayout() {
-    const screenWidth = window.innerWidth;
-    const dataGrid = document.querySelector('.data-grid');
-    const dataCards = document.querySelectorAll('.data-card, .chart-card');
-    
-    console.log('Screen width:', screenWidth);
-    console.log('Data grid element:', dataGrid);
-    console.log('Data grid computed style:', window.getComputedStyle(dataGrid));
-    console.log('Number of data cards:', dataCards.length);
-    
-    dataCards.forEach((card, index) => {
-        console.log(`Card ${index}:`, card);
-        console.log(`Card ${index} computed style:`, window.getComputedStyle(card));
-    });
-    
-    // Force visibility if needed
-    if (screenWidth >= 769) {
-        if (dataGrid) {
-            dataGrid.style.display = 'grid';
-            dataGrid.style.gridTemplateColumns = '1fr 1fr';
-            dataGrid.style.gap = '2rem';
-            dataGrid.style.visibility = 'visible';
-            dataGrid.style.opacity = '1';
-        }
-        
-        dataCards.forEach(card => {
-            card.style.display = 'block';
-            card.style.visibility = 'visible';
-            card.style.opacity = '1';
-        });
-    }
-}
-
-// Run debug function on load and resize
-window.addEventListener('load', debugLaptopLayout);
-window.addEventListener('resize', debugLaptopLayout);
-
-// Force layout update after DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(debugLaptopLayout, 1000);
-});
+})();
